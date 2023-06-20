@@ -2,19 +2,18 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 import storyRoutes from "./routes/stories.js";
 
 const app = express();
+dotenv.config();
 
 app.use(bodyParser.json({ limit: "32mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "32mb", extended: true }));
 app.use(cors());
 app.use("/stories", storyRoutes);
 
-
-
-const MONGO_URI =
-  "mongodb+srv://instaverse:123insta@instaverse.fteqyuw.mongodb.net/?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 const PORT = process.env.PORT || 5001;
 
