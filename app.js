@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import storyRoutes from "./routes/stories.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 dotenv.config();
@@ -11,7 +12,9 @@ dotenv.config();
 app.use(bodyParser.json({ limit: "32mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "32mb", extended: true }));
 app.use(cors());
+
 app.use("/stories", storyRoutes);
+app.use("/user", userRoutes);
 
 const MONGO_URI = process.env.MONGO_URI;
 
