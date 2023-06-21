@@ -19,19 +19,20 @@ const signup = async (req, res) => {
 
     const encryptedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = await User.create({
+    const result = await User.create({
       username,
       email,
       password: encryptedPassword,
     });
 
-    const token = jwt.sign({ email: newUser.email, id: newUser._id }, "1234", {
+    const token = jwt.sign({ email: result.email, id: result._id }, "1234", {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ result: newUser, token });
+    res.status(201).json({ result, token });
   } catch (error) {
-    res.status(500).json({ msg: "Something went wrong" });
+    // res.status(500).json({ msg: "Something went wrong to signup" });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -57,7 +58,7 @@ const login = async (req, res) => {
 
     res.status(200).json({ result: oldUser, token });
   } catch (error) {
-    res.status(500).json({ msg: "Something went wrong" });
+    res.status(500).json({ msg: "Something went wrong to login" });
   }
 };
 
